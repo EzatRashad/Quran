@@ -1,0 +1,108 @@
+import 'package:counter/models/azkar_model.dart';
+import 'package:counter/modules/azkar/second_azkar/second_page.dart';
+import 'package:counter/widgets/loading.dart';
+import 'package:counter/widgets/my_scaffold.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../cubit/cubit.dart';
+import '../../cubit/mood_cubit.dart';
+import '../../cubit/state.dart';
+import '../../widgets/error.dart';
+
+class Azkar_home extends StatefulWidget {
+  const Azkar_home({Key? key}) : super(key: key);
+
+  @override
+  State<Azkar_home> createState() => _Azkar_homeState();
+}
+
+class _Azkar_homeState extends State<Azkar_home> {
+  final ScrollController _scrollController = ScrollController();
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<CounterCubit, CounterStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        return FutureBuilder(
+          future: CounterCubit.get(context).getData(),
+          builder:
+              (BuildContext context, AsyncSnapshot<List<AzkarM>> snapshot) {
+            if (snapshot.hasData) {
+              return MyScaffold(
+                title: "الأذكار",
+                body: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: MoodCubit.get(context).isdark
+                          ? const AssetImage("assets/images/bdark-web.png")
+                          : const AssetImage("assets/images/blight-web.png"),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 15),
+                    child: ListView.builder(
+                      controller: _scrollController,
+                      cacheExtent: 200.0,
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) => Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Container(
+                          padding: const EdgeInsets.all(7),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Column(
+                            children: [
+                              ListTile(
+                                title: Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Text(
+                                    snapshot.data![index].category!,
+                                    textAlign: TextAlign.end,
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1,
+                                  ),
+                                ),
+                                trailing: const Image(
+                                  image: AssetImage('assets/images/sta.png'),
+                                  height: 30,
+                                  width: 30,
+                                  fit: BoxFit.contain,
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Zkr(
+                                          azkar:
+                                              (snapshot.data?[index].array) ??
+                                                  [],
+                                          title:
+                                              snapshot.data![index].category!,
+                                        ),
+                                      ));
+                                },
+                              ),
+                              const Divider(),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            } else if (snapshot.hasError) {
+              print("Errrrorr ${snapshot.error.toString()}");
+              return ErrorW();
+            } else {
+              return const Center(child: Loading());
+            }
+          },
+        );
+      },
+    );
+  }
+}
