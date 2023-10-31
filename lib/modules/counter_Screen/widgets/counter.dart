@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../cubit/cubit.dart';
 import '../../../cubit/state.dart';
@@ -12,9 +13,6 @@ class CounterS extends StatefulWidget {
 }
 
 class _CounterSState extends State<CounterS> {
- 
-  
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CounterCubit, CounterStates>(
@@ -23,17 +21,16 @@ class _CounterSState extends State<CounterS> {
         return GestureDetector(
           onTap: () {
             CounterCubit.get(context).plus();
-             
           },
           child: Center(
               child: Container(
-            height: 300,
-            width: 300,
+            height: 300.h,
+            width: 300.w,
             padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
               color: Colors.white,
               shape: BoxShape.circle,
-              border: Border.all(color: const Color(0Xff9E6F21), width: 5),
+              border: Border.all(color: const Color(0Xff9E6F21), width: 5.w),
             ),
             child: FittedBox(
               fit: BoxFit.contain,
@@ -46,6 +43,5 @@ class _CounterSState extends State<CounterS> {
         );
       },
     );
-    
   }
 }

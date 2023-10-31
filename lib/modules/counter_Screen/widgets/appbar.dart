@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../cubit/cubit.dart';
 
@@ -16,7 +17,7 @@ class _AppBarCWState extends State<AppBarCW> {
       children: [
         Container(
           alignment: AlignmentDirectional.center,
-          height: 200,
+          height: 200.h,
           decoration: const BoxDecoration(
             color: Color(0Xff9E6F21),
             borderRadius: BorderRadius.only(
@@ -24,16 +25,16 @@ class _AppBarCWState extends State<AppBarCW> {
               bottomLeft: Radius.circular(30),
             ),
           ),
-          child: const Text(
+          child: Text(
             "''فَسَبِّحْ بِحَمْدِ رَبِّكَ''",
             style: TextStyle(
               color: Colors.white,
-              fontSize: 50,
+              fontSize: 50.sp,
             ),
           ),
         ),
-        const SizedBox(
-          height: 10,
+        SizedBox(
+          height: 10.h,
         ),
         Row(
           children: [
@@ -41,10 +42,10 @@ class _AppBarCWState extends State<AppBarCW> {
               onPressed: () {
                 CounterCubit.get(context).zero();
               },
-              icon: const Icon(
+              icon: Icon(
                 Icons.restart_alt,
-                size: 50,
-                color: Color(0Xff9E6F21),
+                size: 50.sp,
+                color: const Color(0Xff9E6F21),
               ),
             ),
             const Spacer(),
@@ -54,14 +55,14 @@ class _AppBarCWState extends State<AppBarCW> {
                 CounterCubit.get(context).vibrate =
                     !CounterCubit.get(context).vibrate;
               },
-              icon: const Icon(
+              icon: Icon(
                 Icons.vibration,
-                size: 50,
-                color: Color(0Xff9E6F21),
+                size: 50.sp,
+                color: const Color(0Xff9E6F21),
               ),
             ),
-            const SizedBox(
-              width: 25,
+            SizedBox(
+              width: 40.w,
             )
           ],
         ),

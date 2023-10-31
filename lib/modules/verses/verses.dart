@@ -12,9 +12,13 @@ class VersesScreen extends StatefulWidget {
   const VersesScreen({
     super.key,
     required this.title,
+    required this.id,
+    required this.count,
     required this.notftha,
   });
   final String title;
+  final int id;
+  final int count;
   final bool notftha;
 
   @override
@@ -25,7 +29,8 @@ class _VersesScreenState extends State<VersesScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => GetQuranCubit()..getVersesData(),
+        create: (context) => GetQuranCubit()..getVersesData(
+          chapterId: widget.id,     versesCount: widget.count   ),
         child: BlocBuilder<GetQuranCubit, GetQuranState>(
           builder: (context, state) {
             var cubit = GetQuranCubit.get(context);

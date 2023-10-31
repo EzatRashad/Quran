@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Cat extends StatelessWidget {
-  Cat(
+  const Cat(
       {super.key,
       required this.screen,
       required this.text,
@@ -16,8 +17,8 @@ class Cat extends StatelessWidget {
       child: GestureDetector(
         child: Container(
           padding: const EdgeInsets.all(10),
-          height: 200,
-          width: 150,
+          height: 170.h,
+          width: 150.w,
           decoration: BoxDecoration(
               color: Theme.of(context).primaryColor,
               borderRadius: const BorderRadius.all(Radius.circular(10))),
@@ -28,11 +29,14 @@ class Cat extends StatelessWidget {
                   image,
                 ),
                 fit: BoxFit.contain,
-                width: 130,
+                width: 130.w,
               ),
               Text(
                 text,
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(fontSize: 28),
               )
             ],
           ),

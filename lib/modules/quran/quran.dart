@@ -2,6 +2,7 @@ import 'package:counter/widgets/loading.dart';
 import 'package:counter/widgets/my_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../cubit/get_Quran/get_quran_cubit.dart';
 import '../../cubit/get_Quran/get_quran_state.dart';
@@ -53,104 +54,69 @@ class _QuranState extends State<Quran> {
                             cacheExtent: 200.0,
                             physics: const BouncingScrollPhysics(),
                             itemCount: cubit.cm!.chapters!.length,
-                            itemBuilder: (context, index) => Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Container(
-                                padding: const EdgeInsets.all(7),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Column(
-                                  children: [
-                                    ListTile(
-                                      title: Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 8.0),
-                                        child: Text(
-                                          cubit.cm!.chapters![index].nameArabic
-                                              .toString(),
-                                          textAlign: TextAlign.end,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge,
-                                        ),
-                                      ),
-                                      trailing: Stack(
-                                        alignment: Alignment.center,
-                                        children: [
-                                          Text(cubit.cm!.chapters![index].id
-                                              .toString()),
-                                          const Image(
-                                            image: AssetImage(
-                                                'assets/images/star.png'),
-                                            height: 40,
-                                            width: 40,
-                                            fit: BoxFit.contain,
-                                          ),
-                                        ],
-                                      ),
-                                      leading: Text(
-                                        cubit.cm!.chapters![index]
-                                            .revelationPlace
+                            itemBuilder: (context, index) => Container(
+                              padding: const EdgeInsets.all(7),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    title: Padding(
+                                      padding: const EdgeInsets.only(top: 8.0),
+                                      child: Text(
+                                        cubit.cm!.chapters![index].nameArabic
                                             .toString(),
+                                        textAlign: TextAlign.end,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyLarge,
+                                            .bodyLarge!
+                                            .copyWith(fontSize: 28),
                                       ),
-                                      subtitle: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          const Text(
-                                            'ايه',
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.grey),
-                                          ),
-                                          const SizedBox(
-                                            width: 5,
-                                          ),
-                                          Text(
-                                            cubit.cm!.chapters![index]
-                                                .versesCount
-                                                .toString(),
-                                            style: const TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.grey),
-                                          ),
-                                        ],
-                                      ),
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    VersesScreen(
-                                                      notftha: cubit
-                                                                      .cm!
-                                                                      .chapters![
-                                                                          index]
-                                                                      .id ==
-                                                                  1 ||
-                                                              cubit
-                                                                      .cm!
-                                                                      .chapters![
-                                                                          index]
-                                                                      .id ==
-                                                                  9
-                                                          ? false
-                                                          : true,
-                                                      title: cubit
-                                                          .cm!
-                                                          .chapters![index]
-                                                          .nameArabic
-                                                          .toString(),
-                                                    )));
-                                      },
                                     ),
-                                    const Divider(),
-                                  ],
-                                ),
+                                    trailing: Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        Text(cubit.cm!.chapters![index].id
+                                            .toString()),
+                                        Image(
+                                          image: const AssetImage(
+                                              'assets/images/star.png'),
+                                          height: 40.h,
+                                          width: 40.w,
+                                          fit: BoxFit.contain,
+                                        ),
+                                      ],
+                                    ),
+                                    leading: Text(
+                                      cubit.cm!.chapters![index].revelationPlace
+                                                  .toString() ==
+                                              "madinah"
+                                          ? "مدنيه"
+                                          : "مكيه",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge!
+                                          .copyWith(fontSize: 28),
+                                    ),
+                                    onTap: () {
+                                      final res = cubit.cm?.chapters?[index];
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  VersesScreen(
+                                                    notftha: res!.id ==
+                                                                1 ||res.id ==
+                                                                9
+                                                        ? false
+                                                        : true,
+                                                    title: res.nameArabic?.toString() ??
+                                                        '', count: res.versesCount??0, id: res.id??0,
+                                                  )));
+                                    },
+                                  ),
+                                  const Divider(),
+                                ],
                               ),
                             ),
                           ),

@@ -4,6 +4,7 @@ import 'package:counter/widgets/loading.dart';
 import 'package:counter/widgets/my_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../cubit/cubit.dart';
 import '../../cubit/mood_cubit.dart';
 import '../../cubit/state.dart';
@@ -48,27 +49,30 @@ class _Azkar_homeState extends State<Azkar_home> {
                       physics: const BouncingScrollPhysics(),
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) => Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        padding: const EdgeInsets.symmetric(vertical: 0.0),
                         child: Container(
-                          padding: const EdgeInsets.all(7),
+                          padding: const EdgeInsets.all(5),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10)),
                           child: Column(
                             children: [
                               ListTile(
                                 title: Padding(
-                                  padding: const EdgeInsets.only(top: 8.0),
+                                  padding: const EdgeInsets.only(top: 0.0),
                                   child: Text(
                                     snapshot.data![index].category!,
                                     textAlign: TextAlign.end,
-                                    style:
-                                        Theme.of(context).textTheme.bodyText1,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .copyWith(fontSize: 28),
                                   ),
                                 ),
-                                trailing: const Image(
-                                  image: AssetImage('assets/images/sta.png'),
-                                  height: 30,
-                                  width: 30,
+                                trailing: Image(
+                                  image:
+                                      const AssetImage('assets/images/sta.png'),
+                                  height: 30.h,
+                                  width: 30.w,
                                   fit: BoxFit.contain,
                                 ),
                                 onTap: () {
@@ -96,7 +100,7 @@ class _Azkar_homeState extends State<Azkar_home> {
               );
             } else if (snapshot.hasError) {
               print("Errrrorr ${snapshot.error.toString()}");
-              return ErrorW();
+              return const ErrorW();
             } else {
               return const Center(child: Loading());
             }
